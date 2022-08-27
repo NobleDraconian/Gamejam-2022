@@ -123,7 +123,9 @@
 			"$className" : "ServerStorage",
 
 			"Assets" : {
-				"$className": "Folder"
+				"$className": "Folder",
+
+				"Maps" : {"$path" : "Assets/Maps"}
 			}
 		},
 
@@ -138,7 +140,8 @@
 			"Assets" : {
 				"$className" :"Folder",
 
-				"UIs" : {"$path" : "Assets/UIs"}
+				"UIs" : {"$path" : "Assets/UIs"}, 
+				"Lighting" : {"$path" : "Assets/Lighting"}
 			},
 			"Modules" : {
 				"$path" : "src/Shared/Modules"
