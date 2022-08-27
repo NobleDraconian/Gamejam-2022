@@ -19,6 +19,7 @@ local Players = game:GetService("Players")
 local LevelService;
 local AvatarController;
 local LightingController;
+local TransitionUI = require(script.TransitionUI)
 
 -------------
 -- Defines --
@@ -29,6 +30,16 @@ local LevelConfigs = ReplicatedStorage.Modules.LevelConfigs
 local LevelMusic_Sound = Instance.new('Sound')
 LevelMusic_Sound.Parent = script
 LevelMusic_Sound.Looped = true
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- @Name : StopLevel
+-- @Description : Stops the current level
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function LevelController:StopLevel()
+	LevelMusic_Sound:Stop()
+	TransitionUI:Show()
+	LevelService:StopLevel()
+end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- @Name : Init
@@ -64,24 +75,43 @@ function LevelController:Start()
 	-------------------------------------------------------
 	LevelService.LevelLoaded:connect(function(LevelName,Map)
 		local LevelConfig = require(LevelConfigs[LevelName])
+		local FinishTouched_Connection;
+		local DeathTouched_Connection;
 
 		LevelMusic_Sound.SoundId = "rbxassetid://" .. LevelConfig.MusicID
 		
 		LightingController:LoadLightingState(LevelConfig.LightingState)
 		LevelMusic_Sound:Play()
+		TransitionUI:Hide()
 
-		for _,Object in pairs(Map:GetDescendants()) do
-			if CollectionService:HasTag(Object,"Kill") then
-				Object.Touched:connect(function(TouchingPart)
-					if TouchingPart:IsDescendantOf(LocalPlayer.Character) then
-						LocalPlayer.Character.Humanoid.Health = 0
-						AvatarController:SetRagdolled(true)
-					end
-				end)
+		----------------------------
+		-- Handling player deaths --
+		----------------------------
+		DeathTouched_Connection = LocalPlayer.Character:WaitForChild("Humanoid").Touched:connect(function(TouchingPart)
+			if CollectionService:HasTag(TouchingPart,"Kill") then
+				DeathTouched_Connection:Disconnect()
+				LocalPlayer.Character.Humanoid.Health = 0
+				AvatarController:SetRagdolled(true)
+				task.wait(1)
+
+				self:StopLevel()
+				LevelService:RunLevel(LevelName)
 			end
-		end
+		end)
+
+		--------------------------------
+		-- Handling level end reached --
+		--------------------------------
+		FinishTouched_Connection = Map.Finish.Touched:connect(function(TouchingPart)
+			if TouchingPart:IsDescendantOf(LocalPlayer.Character) then
+				FinishTouched_Connection:Disconnect()
+				self:StopLevel()
+				LevelService:RunLevel("TestLevel2")
+			end
+		end)
 	end)
 
+	TransitionUI:Show()
 	LevelService:RunLevel("TestLevel1")
 end
 

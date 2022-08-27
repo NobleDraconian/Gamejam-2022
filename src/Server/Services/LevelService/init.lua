@@ -24,6 +24,7 @@ local AvatarService;
 -------------
 local LevelConfigs = ReplicatedStorage.Modules.LevelConfigs
 local Maps = ServerStorage.Assets.Maps
+local CurrentMap;
 
 ------------
 -- Events --
@@ -37,6 +38,7 @@ local LevelLoaded; -- Fired to the client when a level is loaded
 function LevelService.Client:RunLevel(Player,LevelName)
 	local LevelConfig = require(LevelConfigs[LevelName])
 	local Map = Maps[LevelConfig.Map]:Clone()
+	CurrentMap = Map
 
 	Map.Parent = Workspace
 	Map:MoveTo(Vector3.new(5000,0,0))
@@ -44,6 +46,15 @@ function LevelService.Client:RunLevel(Player,LevelName)
 	Player.Character:SetPrimaryPartCFrame(Map.Spawn.CFrame)
 
 	LevelLoaded:FireClient(Player,LevelName,Map)
+end
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- @Name : Client.StopLevel
+-- @Description : Stops & cleans up the current level
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function LevelService.Client:StopLevel(Player)
+	CurrentMap:Destroy()
+	Player.Character:Destroy()
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
