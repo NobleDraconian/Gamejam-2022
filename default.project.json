@@ -1,0 +1,180 @@
+{
+	"name" : "Gamejam 2022",
+	"tree" : {
+		"$className": "DataModel",
+
+		"SoundService" : {
+			"$className" : "SoundService",
+			"$properties" : {
+				"RespectFilteringEnabled" : true
+			}
+		},
+
+		"Lighting" : {
+			"$className" : "Lighting",
+			"$path" : "Assets/TestEnv/Lighting",
+			"$properties" : {
+				"Technology" : "ShadowMap",
+				"ClockTime" : 14,
+				"GeographicLatitude" : 41.733,
+				"Brightness" : 2,
+				"ExposureCompensation" : 0,
+				"Ambient" : [0.54117647058824,0.54117647058824,0.54117647058824],
+				"OutdoorAmbient" : [0.50196078431373,0.50196078431373,0.50196078431373],
+				"ColorShift_Bottom" : [0,0,0],
+				"ColorShift_Top" : [0,0,0],
+				"FogColor" : [0.14901960784314,0.14901960784314,0.14901960784314],
+				"FogEnd" : 1000,
+				"FogStart" : 0,
+				"GlobalShadows" : true,
+				"ShadowSoftness" : 0.2
+			}
+		},
+
+		"Players" : {
+			"$className" : "Players",
+			"$properties" : {
+				"CharacterAutoLoads" : false
+			}
+		},
+
+		"ServerScriptService" : {
+			"$className" : "ServerScriptService",
+
+			"DragonEngine" : {"$path" : "Packages/DragonEngine/Framework_Server.rbxmx"},
+			"Modules" : {
+				"$path" : "src/Server/Modules"
+			},
+			"Services" : {"$path" : "src/Server/Services"},
+			"Scripts" : {
+				"$path" : "src/Server/Scripts",
+
+				"RagdollServer" : {"$path" : "Packages/Ragdoll/RagdollServer.rbxmx"}
+			}
+		},
+
+		"ReplicatedFirst" : {
+			"$className" : "ReplicatedFirst",
+			"$path" : "src/Client/ReplicatedFirst"
+		},
+
+		"StarterPlayer" : {
+			"$className" : "StarterPlayer",
+			"$properties" : {
+				"LoadCharacterLayeredClothing" : {
+					"Enum" : 2
+				},
+
+				"HealthDisplayDistance" : 100,
+				"NameDisplayDistance" : 100,
+				"CameraMaxZoomDistance" : 54,
+				"CameraMinZoomDistance" : 10,
+				"CameraMode" : "Classic",
+				"DevCameraOcclusionMode" : "Zoom",
+				"DevComputerCameraMovementMode" : "UserChoice",
+				"DevTouchCameraMovementMode" : "UserChoice",
+				"AutoJumpEnabled" : false,
+				"CharacterJumpPower" : 60,
+				"CharacterUseJumpPower" : true,
+				"CharacterMaxSlopeAngle" : 89,
+				"CharacterWalkSpeed" : 27,
+				"LoadCharacterAppearance" : true,
+				"UserEmotesEnabled" : true,
+				"DevComputerMovementMode" : "UserChoice",
+				"DevTouchMovementMode" : "UserChoice",
+				"EnableMouseLockOption" : false,
+
+				"GameSettingsAvatar" : "R15",
+				"GameSettingsR15Collision" : "InnerBox",
+				"GameSettingsScaleRangeBodyType" : {
+					"NumberRange" : [0,0]
+				},
+				"GameSettingsScaleRangeHead" : {
+					 "NumberRange" : [0.95,1]
+				},
+				"GameSettingsScaleRangeHeight" : {
+					"NumberRange" : [1,1]
+				},
+				"GameSettingsScaleRangeProportion" : {
+					"NumberRange" : [0,0]
+				},
+				"GameSettingsScaleRangeWidth" : {
+					"NumberRange" : [0.7,1]
+				}
+			},
+
+			"StarterPlayerScripts" : {
+				"$className" : "StarterPlayerScripts",
+
+				"DragonEngine" : {"$path" : "Packages/DragonEngine/Framework_Client.rbxmx"},
+				"Modules" : {
+					"$path" : "src/Client/Modules"
+				},
+				"Controllers" : {"$path" : "src/Client/Controllers"},
+				"Scripts" : {
+					"$path" : "src/Client/Scripts",
+
+					"RagdollClient" : {"$path" : "Packages/Ragdoll/RagdollClient.rbxmx"}
+				}
+			}
+		},
+
+		"ServerStorage" : {
+			"$className" : "ServerStorage",
+
+			"Assets" : {
+				"$className": "Folder"
+			}
+		},
+
+		"ReplicatedStorage" : {
+			"$className" : "ReplicatedStorage",
+
+			"Network" : {
+				"$className" : "Folder"
+			},
+			"DragonEngine" : {"$path" : "Packages/DragonEngine/Framework_Core.rbxmx"},
+			"DragonEngine_Configs" : {"$path" : "src/Shared/DragonEngine_Configs"},
+			"Assets" : {
+				"$className" :"Folder",
+
+				"UIs" : {"$path" : "Assets/UIs"}
+			},
+			"Modules" : {
+				"$path" : "src/Shared/Modules"
+			}
+		},
+
+		"Workspace" : {
+			"$className" : "Workspace",
+			"$properties" :  {
+				"AllowThirdPartySales" : false,
+				"FallenPartsDestroyHeight" : -500,
+				"FilteringEnabled" : true,
+				"Gravity" : 196.2, 
+				"StreamingEnabled" : false,
+				"StreamingMinRadius" : 64,
+				"StreamingPauseMode" : "Default",
+				"StreamingTargetRadius" : 1024,
+				"MeshPartHeadsAndAccessories" : {
+					"Enum" : 2
+				},
+				"TouchesUseCollisionGroups" : true,
+				"HumanoidOnlySetCollisionsOnStateChange" : {
+					"Enum" : 2
+				},
+				"AnimationWeightedBlendFix" : {
+					"Enum" : 2
+				},
+				"ReplicateInstanceDestroySetting" : {
+					"Enum" : 2
+				},
+				"UnionsScaleNonuniformly" : {
+					"Enum" : 2
+				}
+			},
+	
+			"Map" : {"$path" : "Assets/TestEnv/Map.rbxmx"}
+		}
+	}
+}
