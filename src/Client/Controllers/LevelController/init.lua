@@ -19,6 +19,7 @@ local Players = game:GetService("Players")
 local LevelService;
 local AvatarController;
 local LightingController;
+local ItemController;
 local TransitionUI = require(script.TransitionUI)
 
 -------------
@@ -26,10 +27,38 @@ local TransitionUI = require(script.TransitionUI)
 -------------
 local LocalPlayer = Players.LocalPlayer
 local LevelConfigs = ReplicatedStorage.Modules.LevelConfigs
+local IsInFuture = false
 
 local LevelMusic_Sound = Instance.new('Sound')
 LevelMusic_Sound.Parent = script
 LevelMusic_Sound.Looped = true
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Helper functions
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local function ShowModel(Model)
+	for _,Object in pairs(Model:GetDescendants()) do
+		if Object:IsA("BasePart") then
+			Object.Transparency = Object:GetAttribute("OriginalTransparency")
+			Object.CanCollide = Object:GetAttribute("OriginalCanCollide")
+			Object.CanTouch = Object:GetAttribute("OriginalCanTouch")
+		end
+	end
+end
+
+local function HideModel(Model)
+	for _,Object in pairs(Model:GetDescendants()) do
+		if Object:IsA("BasePart") then
+			Object:SetAttribute("OriginalTransparency",Object.Transparency)
+			Object:SetAttribute("OriginalCanCollide",Object.CanCollide)
+			Object:SetAttribute("OriginalCanTouch",Object.CanTouch)
+
+			Object.Transparency = 1
+			Object.CanCollide = false
+			Object.CanTouch = false
+		end
+	end
+end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- @Name : StopLevel
@@ -62,6 +91,7 @@ function LevelController:Start()
 
 	AvatarController = self:GetController("AvatarController")
 	LightingController = self:GetController("LightingController")
+	ItemController = self:GetController("ItemController")
 
 	------------------------------------------------------
 	-- Registering lighting states with lighting system --
@@ -82,6 +112,12 @@ function LevelController:Start()
 		
 		LightingController:LoadLightingState(LevelConfig.LightingState)
 		LevelMusic_Sound:Play()
+
+		for _,ShiftableModel in pairs(CollectionService:GetTagged("TimeShiftable")) do
+			HideModel(ShiftableModel.Future)
+			HideModel(ShiftableModel.Present)
+			ShowModel(ShiftableModel.Present)
+		end
 		TransitionUI:Hide()
 
 		----------------------------
@@ -109,6 +145,25 @@ function LevelController:Start()
 				LevelService:RunLevel("TestLevel2")
 			end
 		end)
+	end)
+
+	--------------------------
+	-- Handling time shifts --
+	--------------------------
+	ItemController.ItemUsed:connect(function(ItemName)
+		if ItemName == "TimeLantern" then
+			IsInFuture = not IsInFuture
+
+			for _,ShiftableModel in pairs(CollectionService:GetTagged("TimeShiftable")) do
+				if IsInFuture then
+					ShowModel(ShiftableModel.Future)
+					HideModel(ShiftableModel.Present)
+				else
+					ShowModel(ShiftableModel.Present)
+					HideModel(ShiftableModel.Future)
+				end
+			end
+		end
 	end)
 
 	TransitionUI:Show()
