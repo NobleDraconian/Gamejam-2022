@@ -112,7 +112,7 @@ function LevelController:Start()
 	end)
 
 	TransitionUI:Show()
-	LevelService:RunLevel("TestLevel1")
+	LevelService:RunLevel("TestLevelFull")
 end
 
 return LevelController

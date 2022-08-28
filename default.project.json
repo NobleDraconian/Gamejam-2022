@@ -125,7 +125,8 @@
 			"Assets" : {
 				"$className": "Folder",
 
-				"Maps" : {"$path" : "Assets/Maps"}
+				"Maps" : {"$path" : "Assets/Maps"},
+				"Items" : {"$path" : "Assets/Items"}
 			}
 		},
 
