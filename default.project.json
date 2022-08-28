@@ -178,7 +178,8 @@
 				}
 			},
 	
-			"Map" : {"$path" : "Assets/TestEnv/Map.rbxmx"}
+			"Map" : {"$path" : "Assets/TestEnv/Map.rbxmx"},
+			"Terrain" : {"$path" : "Assets/Terrain.rbxm"}
 		}
 	}
 }

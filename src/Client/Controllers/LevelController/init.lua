@@ -63,7 +63,7 @@ local function ShowModel(Model)
 			Object.Transparency = Object:GetAttribute("OriginalTransparency")
 			Object.CanCollide = Object:GetAttribute("OriginalCanCollide")
 			Object.CanTouch = Object:GetAttribute("OriginalCanTouch")
-		elseif Object:IsA("ParticleEmitter") then
+		elseif Object:IsA("ParticleEmitter") or Object:IsA("Beam") then
 			Object.Enabled = true
 		end
 	end
@@ -79,7 +79,7 @@ local function HideModel(Model)
 			Object.Transparency = 1
 			Object.CanCollide = false
 			Object.CanTouch = false
-		elseif Object:IsA("ParticleEmitter") then
+		elseif Object:IsA("ParticleEmitter") or Object:IsA("Beam") then
 			Object.Enabled = false
 		end
 	end
@@ -287,6 +287,8 @@ function LevelController:Start()
 				local OldPrompt = FertilizePart:FindFirstChildWhichIsA("ProximityPrompt")
 				local ProximityPrompt = Instance.new('ProximityPrompt')
 				ProximityPrompt.ActionText = "Fertilize the Sapling"
+				ProximityPrompt.RequiresLineOfSight = false
+				ProximityPrompt.MaxActivationDistance = 15
 				ProximityPrompt.Parent = FertilizePart
 				local PromptTriggered_Connection;
 
@@ -304,10 +306,10 @@ function LevelController:Start()
 
 					if CurrentState.Area1.SaplingFertilized and CurrentState.Area1.SaplingWatered and not CurrentState.Area1.SaplingIsGrown then
 						CurrentState.Area1.SaplingIsGrown = true
-						HideModel(CurrentMap.Course.Area1.Sapling_BadOutcome)
-						ShowModel(CurrentMap.Course.Area1.Sapling_GoodOutcome.Present)
-						CurrentMap.Course.Area1.Sapling_BadOutcome:SetAttribute("Visible",false)
-						CurrentMap.Course.Area1.Sapling_GoodOutcome:SetAttribute("Visible",true)
+						HideModel(CurrentMap.Sapling_BadOutcome)
+						ShowModel(CurrentMap.Sapling_GoodOutcome.Present)
+						CurrentMap.Sapling_BadOutcome:SetAttribute("Visible",false)
+						CurrentMap.Sapling_GoodOutcome:SetAttribute("Visible",true)
 					end
 				end)
 			end
@@ -317,6 +319,8 @@ function LevelController:Start()
 				local OldPrompt = WaterPart:FindFirstChildWhichIsA("ProximityPrompt")
 				local ProximityPrompt = Instance.new('ProximityPrompt')
 				ProximityPrompt.ActionText = "Water the Sapling"
+				ProximityPrompt.RequiresLineOfSight = false
+				ProximityPrompt.MaxActivationDistance = 15
 				ProximityPrompt.Parent = WaterPart
 				local PromptTriggered_Connection;
 
@@ -334,10 +338,10 @@ function LevelController:Start()
 
 					if CurrentState.Area1.SaplingFertilized and CurrentState.Area1.SaplingWatered and not CurrentState.Area1.SaplingIsGrown then
 						CurrentState.Area1.SaplingIsGrown = true
-						HideModel(CurrentMap.Course.Area1.Sapling_BadOutcome)
-						ShowModel(CurrentMap.Course.Area1.Sapling_GoodOutcome.Present)
-						CurrentMap.Course.Area1.Sapling_BadOutcome:SetAttribute("Visible",false)
-						CurrentMap.Course.Area1.Sapling_GoodOutcome:SetAttribute("Visible",true)
+						HideModel(CurrentMap.Sapling_BadOutcome)
+						ShowModel(CurrentMap.Sapling_GoodOutcome.Present)
+						CurrentMap.Sapling_BadOutcome:SetAttribute("Visible",false)
+						CurrentMap.Sapling_GoodOutcome:SetAttribute("Visible",true)
 					end
 				end)
 			end
@@ -349,6 +353,7 @@ function LevelController:Start()
 				local ProximityPrompt = Instance.new('ProximityPrompt')
 				ProximityPrompt.ActionText = "Chop the tree"
 				ProximityPrompt.RequiresLineOfSight = false
+				ProximityPrompt.MaxActivationDistance = 15
 				ProximityPrompt.Parent = AxePart
 				local PromptTriggered_Connection;
 
@@ -357,12 +362,20 @@ function LevelController:Start()
 				end
 
 				PromptTriggered_Connection = ProximityPrompt.Triggered:connect(function()
+					local TreeFallAnimation = Instance.new('Animation')
+					TreeFallAnimation.AnimationId = "rbxassetid://10744451167"
 					warn("TRIGGERED")
 					PromptTriggered_Connection:Disconnect()
 					ProximityPrompt:Destroy()
 					Item:Destroy()
 
 					CurrentState.Area1.GrownSaplingChopped = true
+
+					local animtrack = CurrentMap.Sapling_GoodOutcome.Future.Humanoid:LoadAnimation(TreeFallAnimation)
+					animtrack.Looped = false
+					animtrack:Play()
+					task.wait(1.2)
+					animtrack:AdjustSpeed(0)
 				end)
 			end
 		elseif ItemName == "Stick" then
@@ -372,6 +385,7 @@ function LevelController:Start()
 				local ProximityPrompt = Instance.new('ProximityPrompt')
 				ProximityPrompt.ActionText = "Set on fire"
 				ProximityPrompt.RequiresLineOfSight = false
+				ProximityPrompt.MaxActivationDistance = 15
 				ProximityPrompt.Parent = FirePart
 				local PromptTriggered_Connection;
 
@@ -396,6 +410,7 @@ function LevelController:Start()
 				local ProximityPrompt = Instance.new('ProximityPrompt')
 				ProximityPrompt.ActionText = "Set on fire"
 				ProximityPrompt.RequiresLineOfSight = false
+				ProximityPrompt.MaxActivationDistance = 15
 				ProximityPrompt.Parent = FirePart
 				local PromptTriggered_Connection;
 
@@ -422,7 +437,7 @@ function LevelController:Start()
 	end)
 
 	TransitionUI:Show()
-	LevelService:RunLevel("TestLevelFull")
+	LevelService:RunLevel("Level1")
 end
 
 return LevelController

@@ -43,7 +43,6 @@ function LevelService.Client:RunLevel(Player,LevelName)
 	CurrentMap = Map
 
 	Map.Parent = Workspace
-	Map:MoveTo(Vector3.new(5000,0,0))
 	AvatarService:LoadPlayerCharacter(Player)
 	Player.Character:SetPrimaryPartCFrame(Map.Spawn.CFrame)
 
