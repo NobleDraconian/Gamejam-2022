@@ -1,6 +1,6 @@
 return {
 	Name = "Test Level Full",
 	Map = "TestLevelFull",
-	LightingState = "Test1",
+	LightingState = "Test2",
 	MusicID = "1837226630"
 }

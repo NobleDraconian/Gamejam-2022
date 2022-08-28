@@ -20,7 +20,7 @@ return {
 	Effects = {
 		Atmosphere = LightingFolder.Atmosphere,
 		Bloom = LightingFolder.Bloom,
-		Blur = LightingFolder.Blur,
+		--Blur = LightingFolder.Blur,
 		ColorCorrection = LightingFolder.ColorCorrection,
 		Skybox = LightingFolder.Skybox
 	}

@@ -13,6 +13,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
+local TweenService = game:GetService("TweenService")
+local Lighting = game:GetService("Lighting")
 
 ------------------
 -- Dependencies --
@@ -45,6 +47,9 @@ local IsInFuture = false
 local CurrentState = {}
 
 local CurrentMap;
+local Camera = Workspace.CurrentCamera
+local ColorCorrection;
+local Blur;
 local LevelMusic_Sound = Instance.new('Sound')
 LevelMusic_Sound.Parent = script
 LevelMusic_Sound.Looped = true
@@ -156,6 +161,12 @@ function LevelController:Start()
 		LightingController:LoadLightingState(LevelConfig.LightingState)
 		LevelMusic_Sound:Play()
 
+		ColorCorrection = Instance.new('ColorCorrectionEffect')
+		ColorCorrection.Parent = Lighting
+		Blur = Instance.new('BlurEffect')
+		Blur.Size = 0
+		Blur.Parent = Lighting
+
 		for _,ShiftableModel in pairs(CollectionService:GetTagged("TimeShiftable")) do
 			HideModel(ShiftableModel.Future)
 			HideModel(ShiftableModel.Present)
@@ -198,6 +209,61 @@ function LevelController:Start()
 	----------------------------
 	ItemController.ItemUsed:connect(function(ItemName)
 		if ItemName == "TimeLantern" then
+			local CamInTween = TweenService:Create(
+				Camera,
+				TweenInfo.new(0.5,Enum.EasingStyle.Sine,Enum.EasingDirection.Out),
+				{
+					FieldOfView = 120
+				}
+			)
+			local CamOutTween = TweenService:Create(
+				Camera,
+				TweenInfo.new(0.5,Enum.EasingStyle.Sine,Enum.EasingDirection.Out),
+				{
+					FieldOfView = 70
+				}
+			)
+			local BlueShift_InTween = TweenService:Create(
+				ColorCorrection,
+				TweenInfo.new(0.5,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut),
+				{
+					TintColor = Color3.fromRGB(152,202,255)
+				}
+			)
+			local BlueShift_OutTween = TweenService:Create(
+				ColorCorrection,
+				TweenInfo.new(0.5,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut),
+				{
+					TintColor = Color3.fromRGB(255,255,255)
+				}
+			)
+			local Blur_InTween = TweenService:Create(
+				Blur,
+				TweenInfo.new(0.5,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut),
+				{
+					Size = 55
+				}
+			)
+			local Blur_OutTween = TweenService:Create(
+				Blur,
+				TweenInfo.new(0.5,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut),
+				{
+					Size = 0
+				}
+			)
+
+			CamInTween:Play()
+			Blur_InTween:Play()
+			task.wait(0.5)
+			CamOutTween:Play()
+			Blur_OutTween:Play()
+
+			if not IsInFuture then
+				BlueShift_InTween:Play()
+			else
+				BlueShift_OutTween:Play()
+			end
+
 			IsInFuture = not IsInFuture
 
 			for _,ShiftableModel in pairs(CollectionService:GetTagged("TimeShiftable")) do
