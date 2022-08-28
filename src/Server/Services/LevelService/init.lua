@@ -13,11 +13,13 @@ LevelService.Client.Server = LevelService
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 local ServerStorage = game:GetService("ServerStorage")
+local CollectionService = game:GetService("CollectionService")
 
 ------------------
 -- Dependencies --
 ------------------
 local AvatarService;
+local ItemService;
 
 -------------
 -- Defines --
@@ -45,6 +47,12 @@ function LevelService.Client:RunLevel(Player,LevelName)
 	AvatarService:LoadPlayerCharacter(Player)
 	Player.Character:SetPrimaryPartCFrame(Map.Spawn.CFrame)
 
+	for _,ItemSpawn in pairs(CollectionService:GetTagged("ItemSpawn")) do
+		if ItemSpawn:IsDescendantOf(Map) then
+			ItemService:SpawnItem(ItemSpawn:GetAttribute("ItemName"),ItemSpawn.CFrame)
+		end
+	end
+
 	LevelLoaded:FireClient(Player,LevelName,Map)
 end
 
@@ -55,6 +63,7 @@ end
 function LevelService.Client:StopLevel(Player)
 	CurrentMap:Destroy()
 	Player.Character:Destroy()
+	ItemService:DestroySpawnedItems()
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,6 +86,7 @@ function LevelService:Start()
 	self:DebugLog("[Level Service] Running!")
 
 	AvatarService = self:GetService("AvatarService")
+	ItemService = self:GetService("ItemService")
 end
 
 return LevelService
