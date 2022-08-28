@@ -29,6 +29,14 @@ local TransitionUI = require(script.TransitionUI)
 -- Defines --
 -------------
 local BASE_STATE = {
+	Narrative = {
+		LanternReached = false,
+		RiverReached = false,
+		SaplingReached = false,
+		ForestFireReached = false,
+		DamReached = false,
+		FinalTunnelReached = false
+	},
 	Area1 = {
 		SaplingFertilized = false,
 		SaplingWatered = false,
@@ -41,11 +49,22 @@ local BASE_STATE = {
 	}
 }
 
+local NarrativeSounds = {
+	Lantern = "10745839902",
+	River = "10745838997",
+	Sapling = "10745837943",
+	ForestFire = "10745840913",
+	Dam = "10745843827",
+	FinalTunnel = "10745841975"
+}
+
 local LocalPlayer = Players.LocalPlayer
 local LevelConfigs = ReplicatedStorage.Modules.LevelConfigs
 local IsInFuture = false
 local CurrentState = {}
 
+local Narrative_Sound = Instance.new('Sound')
+Narrative_Sound.Parent = script
 local CurrentMap;
 local Camera = Workspace.CurrentCamera
 local ColorCorrection;
@@ -53,6 +72,7 @@ local Blur;
 local LevelMusic_Sound = Instance.new('Sound')
 LevelMusic_Sound.Parent = script
 LevelMusic_Sound.Looped = true
+LevelMusic_Sound.Volume = 2
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Helper functions
@@ -175,6 +195,17 @@ function LevelController:Start()
 				ShowModel(ShiftableModel.Present)
 			end
 		end
+
+		for _,NarrativeMarker in pairs(Map.Narratives:GetChildren()) do
+			NarrativeMarker.Touched:connect(function(TP)
+				if TP:IsDescendantOf(LocalPlayer.Character) then
+					NarrativeMarker.CanTouch = false
+
+					Narrative_Sound.SoundId = "rbxassetid://" .. NarrativeSounds[NarrativeMarker.Name]
+					Narrative_Sound:Play()
+				end
+			end)
+		end
 		TransitionUI:Hide()
 
 		----------------------------
@@ -199,7 +230,6 @@ function LevelController:Start()
 			if TouchingPart:IsDescendantOf(LocalPlayer.Character) then
 				FinishTouched_Connection:Disconnect()
 				self:StopLevel()
-				LevelService:RunLevel("TestLevel2")
 			end
 		end)
 	end)
@@ -260,8 +290,10 @@ function LevelController:Start()
 
 			if not IsInFuture then
 				BlueShift_InTween:Play()
+				Workspace.Terrain:SetMaterialColor(Enum.Material.Grass,Color3.fromRGB(139, 109, 79))
 			else
 				BlueShift_OutTween:Play()
+				Workspace.Terrain:SetMaterialColor(Enum.Material.Grass,Color3.fromRGB(66, 100, 37))
 			end
 
 			IsInFuture = not IsInFuture
