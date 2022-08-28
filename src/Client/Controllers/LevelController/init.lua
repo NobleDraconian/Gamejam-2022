@@ -424,11 +424,11 @@ function LevelController:Start()
 					ProximityPrompt:Destroy()
 					Item:Destroy()
 
-					ShowModel(CurrentMap.Course.Area2.BlockingTrees_Fire.Present)
-					HideModel(CurrentMap.Course.Area2.BlockingTrees_NoFire)
+					ShowModel(CurrentMap.CampfireTrees_Burned.Present)
+					HideModel(CurrentMap.CampfireTrees)
 
-					CurrentMap.Course.Area2.BlockingTrees_Fire:SetAttribute("Visible",true)
-					CurrentMap.Course.Area2.BlockingTrees_NoFire:SetAttribute("Visible",false)
+					CurrentMap.CampfireTrees_Burned:SetAttribute("Visible",true)
+					CurrentMap.CampfireTrees:SetAttribute("Visible",false)
 
 					CurrentState.Area2.TreesLit = true
 				end)
