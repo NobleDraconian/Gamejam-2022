@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8d27c0cb043fb7dce13503725fc567fd3d82bdde3ff344323ae4baf1be69eb51
-size 1352
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<Meta name="ExplicitAutoJoints">true</Meta>
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Sky" referent="RBX9B34D7E4DB454013A825A8C7B59774C6">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="CelestialBodiesShown">false</bool>
+			<float name="MoonAngularSize">0</float>
+			<Content name="MoonTextureId"><url>rbxassetid://0</url></Content>
+			<string name="Name">Sky</string>
+			<Content name="SkyboxBk"><url>rbxassetid://3595370552</url></Content>
+			<Content name="SkyboxDn"><url>rbxassetid://3595370552</url></Content>
+			<Content name="SkyboxFt"><url>rbxassetid://3595370552</url></Content>
+			<Content name="SkyboxLf"><url>rbxassetid://3595370552</url></Content>
+			<Content name="SkyboxRt"><url>rbxassetid://3595370552</url></Content>
+			<Content name="SkyboxUp"><url>rbxassetid://3595370552</url></Content>
+			<int64 name="SourceAssetId">-1</int64>
+			<int name="StarCount">0</int>
+			<float name="SunAngularSize">0</float>
+			<Content name="SunTextureId"><url>rbxassetid://0</url></Content>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+</roblox>

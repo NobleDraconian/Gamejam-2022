@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1d4ea01c1bf9bad4f360b444c7aa6b86fcc2aa36db12fcfa1d3e6c2092607299
-size 935
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<Meta name="ExplicitAutoJoints">true</Meta>
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Atmosphere" referent="RBX918C0451636D4B9496AEA2B139DB1B79">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<Color3 name="Color">
+				<R>0</R>
+				<G>0</G>
+				<B>0</B>
+			</Color3>
+			<Color3 name="Decay">
+				<R>0.580392182</R>
+				<G>0.137254909</G>
+				<B>0.690196097</B>
+			</Color3>
+			<float name="Density">0.474999994</float>
+			<float name="Glare">1</float>
+			<float name="Haze">2.0999999</float>
+			<string name="Name">Atmosphere</string>
+			<float name="Offset">0</float>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+	</Item>
+</roblox>

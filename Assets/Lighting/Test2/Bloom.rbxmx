@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ca1850026f64710ad1dd0d9be10ac3b5000dd4dfd4d7901a3dd79da036fd987e
-size 738
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<Meta name="ExplicitAutoJoints">true</Meta>
+	<External>null</External>
+	<External>nil</External>
+	<Item class="BloomEffect" referent="RBXF5F4A376DC374D51861A481712F9FC6A">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="Enabled">true</bool>
+			<float name="Intensity">4</float>
+			<string name="Name">Bloom</string>
+			<float name="Size">24</float>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<float name="Threshold">2</float>
+		</Properties>
+	</Item>
+</roblox>

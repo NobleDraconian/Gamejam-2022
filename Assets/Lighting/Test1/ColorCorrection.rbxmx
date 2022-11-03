@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e272f260373bde98fbf2f9ac9bf522b481b2dc033189a2b7c689575e1969f3a2
-size 854
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<Meta name="ExplicitAutoJoints">true</Meta>
+	<External>null</External>
+	<External>nil</External>
+	<Item class="ColorCorrectionEffect" referent="RBXA76EBE1A8A91444F891FB42B64FECE9E">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<float name="Brightness">0</float>
+			<float name="Contrast">0</float>
+			<bool name="Enabled">true</bool>
+			<string name="Name">ColorCorrection</string>
+			<float name="Saturation">0.300000012</float>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<Color3 name="TintColor">
+				<R>1</R>
+				<G>1</G>
+				<B>1</B>
+			</Color3>
+		</Properties>
+	</Item>
+</roblox>

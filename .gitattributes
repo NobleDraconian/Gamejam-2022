@@ -4,8 +4,3 @@
 *.rbxm binary
 *.rbxmx binary
 *.png binary
-
-# LFS Configs
-*.rbxmx filter=lfs diff=lfs merge=lfs -text
-*.rbxm filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text
